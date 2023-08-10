@@ -10,7 +10,7 @@ class Customerservice {
 	}
 	editCustomer(id, customer) {
 		// console.log(id);
-		// console.log(customer);
+		// console.log(customer);cc                                                                                                                                                                                     
 
 		return Axios.put(`${this.url}editcustomerdata/${id}`, customer);
 	}

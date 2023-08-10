@@ -108,16 +108,16 @@ const CustomerDialog = forwardRef((props, ref) => {
 	};
 
 	const handleChange = (e) => {
-		console.log(e.target.name);
+		// console.log(e.target.name);
 		setCustomer({ ...customer, [e.target.name]: e.target.value });
-		console.log(customer);
+		// console.log(customer);
 	};
 
 	const onSubmit = () => {
 		handleClose();
 		Customerservice.addcustomer(customer)
 			.then((result) => {
-				console.log(result);
+				// console.log(result);
 				if (result.data.status == 1) {
 					// getCustomerList()
 					window.location.reload(false);
@@ -133,32 +133,36 @@ const CustomerDialog = forwardRef((props, ref) => {
 		handleClose();
 		Customerservice.editCustomer(id, customer)
 			.then((result) => {
-				console.log(result);
+				// console.log(result);
 				if (result.data.status == 1) {
 					// getCustomerList()
-					window.location.reload(false);
-				} else {
 					alert(result.data.msg);
+					console.log('message',result.data.msg)
+					window.location.reload(false);
+
+				} else {
+					alert(`ERROR ${result.data.msg}`);
+					console.log(result.data.msg)
 				}
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log('ERROR',err);
 			});
 	};
 
 	useImperativeHandle(ref, () => ({
 		showDialog(data, isEdit) {
-			console.log(data);
+			// console.log(data);
 			setAdd(isEdit);
 			setId(data._id);
 			setCustomer(data);
-			console.log(customer);
+			// console.log(customer);
 		},
 	}));
 
 	useEffect(() => {
-		console.log(id);
-		console.log(customer);
+		// console.log(id);
+		// console.log(customer);
 		if (customer.firstname) {
 			handleClickOpen();
 		}

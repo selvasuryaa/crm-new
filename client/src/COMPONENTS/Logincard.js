@@ -1,55 +1,76 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Loginpage from '../PAGES/Loginpage';
+import React, { useState } from 'react';
+import crmImage from '../ASSETS/crm img.jpg'
 import "../CSS/Login.css"
+import { useNavigate } from 'react-router-dom'
+import Adminservice from '../SERVICES/Adminservice';
+// import Authservice from '../SERVICES/Authservice'
+// import MiniDrawer from './Drawer';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
-});
 
 export default function LoginCard() {
-  const classes = useStyles();
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  const navigateToRegister = () => {
+    return navigate('/register')
+  }
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(username, password)
+    if (username == '' || password == '') {
+      alert('Please enter Username and password')
+      return
+    }
+    Adminservice.loginUser({
+      username: username,
+      password: password
+    })
+      .then(response => {
+        console.log(response)
+        if (response.data.status == 0) {
+          alert('Wrong Username')
+        }
+        if (response.data.status == 1) {
+          alert('Wrong Password')
+        }
+        if (response.data.status == 2) {
+          alert(`${response.data.msg}`)
+          setUsername('')
+          setPassword('')
+          // localStorage.setItem('islogged', true)
+          // Authservice.setToken(response.data.AccessToken)
+        }
+
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+  }
 
   return (
-    <Card id="logincard" className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={require("../ASSETS/crm img.jpg")}
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Login
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-
-            <Loginpage/>
-
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      {/* <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions> */}
-    </Card>
+    <div className='login-wrapper'>
+      <div className="login-card">
+        <img src={crmImage} alt="Contemplative Reptile" />
+        <h1>Login</h1>
+        <form>
+          <div>
+            <label>UserName</label>
+            <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
+          </div>
+          <div>
+            <label>Password</label>
+            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <div className='btn-grp'>
+            <button id='login' onClick={submitHandler}>Login</button>
+            <button id='register' onClick={navigateToRegister}>Register</button>
+          </div>
+        </form>
+      </div >
+    </div>
   );
 }
 

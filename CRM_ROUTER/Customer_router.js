@@ -10,7 +10,7 @@ router.post("/regcustomer", (req, res) => {
 	customer
 		.insertMany(new_customer)
 		.then((result) => {
-			res.json({ status: 1, msg: "registered success", result });
+			res.json({ status: 1, msg: "registered success" });
 		})
 		.catch((err) => {
 			res.json({ status: 0, msg: "not registered ", err });
@@ -24,6 +24,7 @@ router.get("/getcustomerList", (req, res) => {
 		.then((data) => {
 			// res.send(data)
 			res.json({ Data: data });
+
 		})
 		.catch((err) => {
 			res.json({ Error: err });
@@ -37,9 +38,10 @@ router.put("/editcustomerdata/:id", (req, res) => {
 	// let id= req.params.id
 
 	customer
-		.update({ _id: req.params.id }, { $set: dataToEdit })
+		.updateOne({ _id: req.params.id }, { $set: dataToEdit })
 		.then((result) => {
 			res.json({ status: 1, msg: "updated success" });
+			console.log(json.parse(status, msg))
 		})
 		.catch((err) => {
 			res.json({ status: 0, msg: "not updated" });

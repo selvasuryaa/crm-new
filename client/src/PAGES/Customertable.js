@@ -84,32 +84,32 @@ export default function StickyHeadTable() {
 		customerDialogRef.handleClickOpen();
 	}
 
-	function getCustomerList() {
-		Customerservice.getAllCustomers()
-			.then((response) => {
-				console.log(response.data.Data);
-				setCustomers([customers, response.data.Data]);
-				setCustomers((customers) =>
-					customers.concat(response.data.Data)
-				);
-				console.log(customers);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
+	// function getCustomerList() {
+	// 	Customerservice.getAllCustomers()
+	// 		.then((response) => {
+	// 			console.log(response.data.Data);
+	// 			setCustomers([customers, response.data.Data]);
+	// 			setCustomers((customers) =>
+	// 				customers.concat(response.data.Data)
+	// 			);
+	// 			console.log(customers);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// }
 	const onEditClick = (data) => {
-		console.log(data);
+		// console.log(data);
 		setCus({ ...cus, data });
 		customerDialogRef.current.showDialog(data, false);
-		console.log(cus);
+		// console.log(cus);
 	};
 
 	const onDeleteClick = (id) => {
-		console.log(id);
+		// console.log(id);
 		Customerservice.deleteCustomer(id)
 			.then((result) => {
-				console.log(result);
+				// console.log(result);
 				if (result.data.status == 1) {
 					// getCustomerList()
 					window.location.reload(false);
@@ -121,17 +121,18 @@ export default function StickyHeadTable() {
 				console.log(err);
 			});
 	};
+
 	useEffect(() => {
 		Customerservice.getAllCustomers()
 			.then((res) => {
-				console.log(res.data.Data);
+				// console.log(res.data.Data);
 				setCustomers((customers) =>
 					customers.concat(res.data.Data)
 				);
-				console.log(customers);
+				// console.log(customers);
 			})
 			.catch((err) => {
-				console.log(err);
+				console.log('errorrrrr',err);
 			});
 		// getCustomerList()
 	}, []);
@@ -143,7 +144,7 @@ export default function StickyHeadTable() {
 				customer={cus}
 			></CustomerDialog>
 
-			<Typography variant="h4" component="h2">
+			<Typography variant="h4" component="h2" style={{padding:'10px'}}>
 				Customer Table
 			</Typography>
 			<TableContainer className={classes.container}>
@@ -181,7 +182,7 @@ export default function StickyHeadTable() {
 										{columns.map((column) => {
 											const value =
 												customer[column.id];
-											console.log(value);
+											// console.log(value);
 											return column.id ===
 												"actions" ? (
 												<TableCell

@@ -16,13 +16,13 @@ import Orderservice from "../SERVICES/Orderservice";
 import OrderDialog from "./Orderdialog";
 
 const columns = [
-	{ id: "orderID", label: "Order ID", minWidth: 170 },
-	{ id: "quantity", label: "Quantity", minWidth: 170 },
+	{ id: "orderID", label: "Order ID", minWidth: 130 },
+	{ id: "quantity", label: "Quantity", maxWidth: 150 },
 
 	{
 		id: "amount",
 		label: "Amount",
-		minWidth: 170,
+		minWidth: 17,
 
 		
 	},

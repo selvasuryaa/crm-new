@@ -9,7 +9,7 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import FaceIcon from '@material-ui/icons/Face';
 import PieCard from "./Piecard"
 import Combinationcard from "./Combinationcard"
-import BarCard from "./Barcard"
+import BarCard from "./Barcard" 
 import ProfitCard from "../PAGES/Profitcard"
 
 

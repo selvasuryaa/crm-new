@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -23,16 +24,20 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import InsertChartIcon from "@material-ui/icons/InsertChart";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
-// import Table from '../pages/Table';
+
+import LogoutIcon from '@material-ui/icons/Logout';
+import LoginIcon from '@material-ui/icons/Login';
+// import AppRegistrationIcon from '@material-ui/icons/AppRegistration';
+// import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+
 import StickyHeadTable from "../PAGES/Customertable";
-import { createBrowserHistory } from "history";
-import { Router, Route, Link } from "react-router-dom";
 import Customertable from "../PAGES/Customertable";
 import Ordertable from "../PAGES/Ordertable";
 import Producttable from "../PAGES/Producttable";
 import Dashboard from "./Dashboard";
 import About from "../PAGES/About";
-const history = createBrowserHistory();
+import LoginCard from './Logincard';
+import RegisterCard from "./RegisterCard";
 
 const drawerWidth = 240;
 
@@ -106,14 +111,26 @@ export default function MiniDrawer(props) {
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
 
-	const iconArr = [
+	const iconArray = [
+		// <AppRegistrationIcon />,
+		<LoginIcon />,
 		<InsertChartIcon />,
 		<PersonIcon />,
 		<ShoppingCartIcon />,
 		<LoyaltyIcon />,
 		<ErrorOutlineIcon />,
+		<LogoutIcon />
+
 	];
-	const toArr = ["/dashboard", "/customer", "/order", "/product", "/about"];
+	const toArray = [
+		"/dashboard",
+		"/customer",
+		"/order",
+		"/product",
+		"/about",
+		"/login",
+		"/register"
+	];
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -123,38 +140,38 @@ export default function MiniDrawer(props) {
 		setOpen(false);
 	};
 
-	useEffect(() => {
-		// props.history.push("/dashboard");
-	}, []);
+	// useEffect(() => {
+	// props.history.push("/dashboard");
+	// }, []);
 
 	return (
 		<div className={classes.root}>
-			<CssBaseline />
-			<AppBar
-				// position="fixed"
-				className={clsx(classes.appBar, {
-					[classes.appBarShift]: open,
-				})}
-			>
-				<Toolbar>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						onClick={handleDrawerOpen}
-						edge="start"
-						className={clsx(classes.menuButton, {
-							[classes.hide]: open,
-						})}
-					>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant="h6" className={classes.title}>
-						CRM
-					</Typography>
-					{/* <Button color="inherit">Logout</Button> */}
-				</Toolbar>
-			</AppBar>
-			<Router history={history}>
+			<Router >
+				<CssBaseline />
+				<AppBar
+					// position="fixed"
+					className={clsx(classes.appBar, {
+						[classes.appBarShift]: open,
+					})}
+				>
+					<Toolbar>
+						<IconButton
+							color="inherit"
+							aria-label="open drawer"
+							onClick={handleDrawerOpen}
+							edge="start"
+							className={clsx(classes.menuButton, {
+								[classes.hide]: open,
+							})}
+						>
+							<MenuIcon />
+						</IconButton>
+						<Typography variant="h6" className={classes.title}>
+							CRM
+						</Typography>
+						{/* <Button color="inherit">Logout</Button> */}
+					</Toolbar>
+				</AppBar>
 				<Drawer
 					variant="permanent"
 					className={clsx(classes.drawer, {
@@ -190,10 +207,10 @@ export default function MiniDrawer(props) {
 								button
 								key={text}
 								component={Link}
-								to={toArr[index]}
+								to={toArray[index]}
 							>
 								<ListItemIcon>
-									{iconArr[index]}
+									{iconArray[index]}
 								</ListItemIcon>
 								<ListItemText primary={text} />
 							</ListItem>
@@ -212,16 +229,18 @@ export default function MiniDrawer(props) {
 				<main className={classes.content}>
 					<div className={classes.toolbar} />
 					<Typography>{/* <StickyHeadTable/> */}</Typography>
-					<Route
-						exact
-						path="/customer"
-						component={Customertable}
-					/>
-					<Route exact path="/" component={Dashboard} />
-					<Route exact path="/order" component={Ordertable} />
-					<Route exact path="/product" component={Producttable} />
-					<Route exact path="/dashboard" component={Dashboard} />
-					<Route exact path="/about" component={About} />
+					<Routes>
+						<Route path="/login" element={<LoginCard />} />
+						<Route path="/register" element={<RegisterCard />} />
+						<Route path="/customer" element={<Customertable />} />
+						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/order" element={<Ordertable />} />
+						<Route path="/product" element={<Producttable />} />
+						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/about" element={<About />} />
+
+
+					</Routes>
 				</main>
 			</Router>
 		</div>

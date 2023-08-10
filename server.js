@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express"); //framework
 const mongoose = require("mongoose"); //bridge bw frontend n backend
 const Admin_router = require("./CRM_ROUTER/Admin_router");
@@ -5,16 +6,14 @@ const Customer_router = require("./CRM_ROUTER/Customer_router");
 const Order_router = require("./CRM_ROUTER/Order_router");
 const Product_router = require("./CRM_ROUTER/Product_router");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express(); //server initialization
 
 const PORT = process.env.PORT || 5000;
 
-const url =
-	"mongodb+srv://selva:selva@cluster0.tquoj.mongodb.net/crmDB?retryWrites=true&w=majority";
+const url = process.env.DATABASE_URI;
 
-mongoose.connect(url, { useNewUrlParser: true });
+mongoose.connect(url, { useNewUrlParser: true ,  useUnifiedTopology: true });
 
 mongoose.connection.on("connected", () => {
 	console.log("mongoDB connected");
@@ -33,24 +32,14 @@ app.use("/customer", Customer_router);
 app.use("/order", Order_router);
 app.use("/product", Product_router);
 
-// app.get("/", (req, res) => {
-// 	//to check whether server working or not
-// 	res.send("welcome to my page");
-// });
-
-if (
-	process.env.NODE_ENV === "production" ||
-	process.env.NODE_ENV === "staging"
-) {
-	app.use(express.static("client/build"));
-	app.get("/", (req, res) => {
-		res.sendFile(path.join(__dirname + "/client/build/index.html"));
-	});
-} else {
-	app.get("/", (req, res) => {
-		//to check whether server working or not
-		res.send("welcome to my page");
-	});
-}
+// if (
+// 	process.env.NODE_ENV === "production" ||
+// 	process.env.NODE_ENV === "staging"
+// ) {
+// 	app.use(express.static("client/build"));
+// 	app.get("/", (req, res) => {
+// 		res.sendFile(path.join(__dirname + "/client/build/index.html"));
+// 	});
+// }
 
 app.listen(PORT, () => console.log(`server started at port ${PORT}`));

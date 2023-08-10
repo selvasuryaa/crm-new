@@ -1,0 +1,47 @@
+@host = http://localhost:5000
+
+GET https://64bd1df32320b36433c76e5a.mockapi.io/accounts
+
+###
+GET https://64bd1df32320b36433c76e5a.mockapi.io/accounts
+###
+GET {{host}}/customer/getcustomerList
+
+###
+POST {{host}}/customer/regcustomer 
+Content-Type: application/json 
+
+{
+    "firstname":"satheesh",
+    "lastname":"kumar",
+    "email":"sakthivel@gmail.com",
+    "phone":1234566789,
+    "membership":"Platinm"
+}
+###
+DELETE {{host}}/customer/deletecustomerdata/64d1015c64eee03b94813447 HTTP/1.1
+###
+GET {{host}}/customer/getcustomerdata/Gold
+
+###
+POST {{host}}/admin/regadmin
+Content-Type: application/json 
+
+{
+    "username":"tamilarasan",
+    "password":"tamil"
+}
+
+###
+POST {{host}}/admin/loginUser
+Content-Type: application/json 
+
+{
+    "username":"selva",
+    "password":"12345"
+}
+###
+GET {{host}}/Admin/getAdminData HTTP/1.1
+
+###
+DELETE {{host}}/Admin/deleteAdmin/64d3b16936d5760cb48d8945 HTTP/1.1

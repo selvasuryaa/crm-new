@@ -1,37 +1,69 @@
-import React, { useState, useEffect } from "react";
-// import ProfitCard from './PAGES/Profitcard';
-// import Combinationcard from './COMPONENTS/Combinationcard';
-// import Barchart from './PAGES/Barchart';
-// import SimpleCard from './PAGES/Dashcard';
-// import Splinechart from './PAGES/Splinechart';
-// import ProductTable from './PAGES/Producttable';
-// import OrderTable from './PAGES/Ordertable';
+import React, { useState } from "react";
 import MiniDrawer from "./COMPONENTS/Drawer";
 import LoginCard from "./COMPONENTS/Logincard";
-// import logo from './logo.svg';
-// import './App.css';
-// import FloatingActionButtonSize from "./PAGES/FAB"
-// import PieCard from "./COMPONENTS/Piecard"
-// import Combinationcard from "./COMPONENTS/Combinationcard"
-// import Dashboard from "./COMPONENTS/Dashboard"
-import Authservice from "./SERVICES/Authservice";
-// import { useState } from "react";
+// import Authservice from "./SERVICES/Authservice";
+import RegisterCard from "./COMPONENTS/RegisterCard";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Authservice from './SERVICES/Authservice'
+import ProtectedRoute from './ProtectedRoutes'
+import About from "./PAGES/About";
+import Dashboard from "./COMPONENTS/Dashboard";
+
 
 function App() {
-	const [loggedIn, setLoggedIn] = useState(false);
 
-	useEffect(() => {
-		let x = Authservice.isLoggedIn();
-		setLoggedIn(x);
-		console.log(loggedIn);
-	});
+	// const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-	// return <div>{loggedIn ? <MiniDrawer /> : <LoginCard />}</div>;
+	// const token = Authservice.getToken()
+
+	// if(token != null){
+	// 	setIsLoggedIn(true)
+	// console.log('app.js')
+	// console.log(token)
+	// }
+
+	// if(isLoggedIn){
+	// 	return <MiniDrawer/>
+	// }
+
 	return (
 		<div>
-			<MiniDrawer />
+			<MiniDrawer/>
+			{/* <Router>
+
+				<Routes>
+					<Route path='/login' element={<LoginCard />}/>
+					<Route path='/register' element={<RegisterCard />}/>
+					<Route element={<ProtectedRoute/>}>
+						<Route index element={<MiniDrawer/>} />
+					</Route>
+				</Routes>				
+			</Router> */}
 		</div>
 	);
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+	// const [loggedIn, setLoggedIn] = useState(false);
+
+	// useEffect(() => {
+	// 	let x = Authservice.isLoggedIn();
+	// 	setLoggedIn(x);
+		// console.log("jkjkj",x);
+
+		// console.log("jkjkj",loggedIn);
+	// });
+
+	// return (<div> <LoginCard /></div>);
