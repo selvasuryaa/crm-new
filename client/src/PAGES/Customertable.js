@@ -23,25 +23,25 @@ const columns = [
 		id: "email",
 		label: "Email",
 		minWidth: 170,
-		
+
 	},
 	{
 		id: "phone",
 		label: "Phone",
 		minWidth: 170,
-		
+
 	},
 	{
 		id: "membership",
 		label: "Membership",
 		minWidth: 170,
-		
+
 	},
 	{
 		id: "actions",
 		label: "Actions",
 		minWidth: 170,
-		
+
 	},
 ];
 
@@ -54,7 +54,7 @@ const useStyles = makeStyles({
 	},
 	tablehead: {
 		fontWeight: "bold",
-		
+
 		fontSize: "20px",
 	},
 });
@@ -78,7 +78,7 @@ export default function StickyHeadTable() {
 		setPage(0);
 	};
 
-	
+
 	function opendialog(e) {
 		//showModal()
 		customerDialogRef.handleClickOpen();
@@ -132,7 +132,7 @@ export default function StickyHeadTable() {
 				// console.log(customers);
 			})
 			.catch((err) => {
-				console.log('errorrrrr',err);
+				console.log('errorrrrr', err);
 			});
 		// getCustomerList()
 	}, []);
@@ -144,7 +144,7 @@ export default function StickyHeadTable() {
 				customer={cus}
 			></CustomerDialog>
 
-			<Typography variant="h4" component="h2" style={{padding:'10px'}}>
+			<Typography variant="h4" component="h2" style={{ padding: '10px' }}>
 				Customer Table
 			</Typography>
 			<TableContainer className={classes.container}>
@@ -154,7 +154,7 @@ export default function StickyHeadTable() {
 							{columns.map((column) => (
 								<TableCell
 									className={classes.tablehead}
-									key={column.id}
+									key={column.label}
 									align={column.align}
 									style={{
 										minWidth: column.minWidth,
@@ -177,7 +177,7 @@ export default function StickyHeadTable() {
 										hover
 										role="checkbox"
 										tabIndex={-1}
-										// key={customer._id}
+									// key={customer._id}
 									>
 										{columns.map((column) => {
 											const value =

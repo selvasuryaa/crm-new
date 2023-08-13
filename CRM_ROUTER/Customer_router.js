@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const customer = require("../MODEL/Customer");
 
+
 //insert data
 router.post("/regcustomer", (req, res) => {
 	console.log(req.body);
@@ -22,7 +23,6 @@ router.get("/getcustomerList", (req, res) => {
 	customer
 		.find()
 		.then((data) => {
-			// res.send(data)
 			res.json({ Data: data });
 
 		})
@@ -40,8 +40,9 @@ router.put("/editcustomerdata/:id", (req, res) => {
 	customer
 		.updateOne({ _id: req.params.id }, { $set: dataToEdit })
 		.then((result) => {
-			res.json({ status: 1, msg: "updated success" });
-			console.log(json.parse(status, msg))
+			console.log(result)
+			res.json({ status: 1, msg: "updated success", "response":result });
+			// console.log(json.parse(status, msg))
 		})
 		.catch((err) => {
 			res.json({ status: 0, msg: "not updated" });
@@ -80,11 +81,13 @@ router.get("/getsinglecustomerdata/:id", (req, res) => {
 		});
 });
 
-//get data depend on the given data using id n prop
+//get data depend on Query
 router.get("/getcustomerdata/:membership", (req, res) => {
+	console.log(req.headers)
 	customer
 		.find({ membership: req.params.membership })
 		.then((result) => {
+
 			res.json({
 				status: 1,
 				msg: "getting membership data sucess",
@@ -99,36 +102,5 @@ router.get("/getcustomerdata/:membership", (req, res) => {
 			});
 		});
 });
-
-//login
-// router.post("/login",(req,res)=>{
-//     let uname = req.body.email
-//     let paswrd = req.body.phone
-//     // let email = req.params.username
-//     // let phone = req.params.paswrd
-// console.log(req.body)
-// console.log(uname)
-//     student.find({email:uname})
-//         .then((result)=>{
-
-// console.log(result)
-
-//             if(result.length==0){
-//                 res.json({"status":"username wrong"})
-//             }else{
-//                 if(result[0].phone==paswrd){
-//                     let token = jwt.sign({userId:uname},"mysecret",{expiresIn:'2d'})
-//                     res.json({"status":1,"msg":"login success","result":result,"token":token})
-//                 }else{
-//                  res.json({"status":"password wrong"})
-//                 }
-
-//             }
-
-//         })
-//         .catch((err)=>{
-//             res.json({"status":0,"msg":"login invalid","error":err})
-//         })
-// })
 
 module.exports = router;

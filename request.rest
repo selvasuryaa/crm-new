@@ -6,6 +6,7 @@ GET https://64bd1df32320b36433c76e5a.mockapi.io/accounts
 GET https://64bd1df32320b36433c76e5a.mockapi.io/accounts
 ###
 GET {{host}}/customer/getcustomerList
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoieSIsImlhdCI6MTY5MTc2NjYxMywiZXhwIjoxNjkxNzY2NjczfQ.lvoPDjoRx4v0PWWVF9IJxUKzdfVcloWX2YDja4CMtCI
 
 ###
 POST {{host}}/customer/regcustomer 
@@ -45,3 +46,6 @@ GET {{host}}/Admin/getAdminData HTTP/1.1
 
 ###
 DELETE {{host}}/Admin/deleteAdmin/64d3b16936d5760cb48d8945 HTTP/1.1
+###
+GET {{host}}/customer/getcustomerList HTTP/1.1
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNlbHZhIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkxODI2OTMwfQ.623z0_IXICjChp9iFFTQ-_h22_Luh1aR1iX1vKGXDGU

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
@@ -25,10 +25,9 @@ import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import InsertChartIcon from "@material-ui/icons/InsertChart";
 import LoyaltyIcon from "@material-ui/icons/Loyalty";
 
-import LogoutIcon from '@material-ui/icons/Logout';
-import LoginIcon from '@material-ui/icons/Login';
-// import AppRegistrationIcon from '@material-ui/icons/AppRegistration';
-// import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import StickyHeadTable from "../PAGES/Customertable";
 import Customertable from "../PAGES/Customertable";
@@ -36,8 +35,16 @@ import Ordertable from "../PAGES/Ordertable";
 import Producttable from "../PAGES/Producttable";
 import Dashboard from "./Dashboard";
 import About from "../PAGES/About";
+
 import LoginCard from './Logincard';
 import RegisterCard from "./RegisterCard";
+import LogoutScreen from "../PAGES/Logout";
+
+import Authservice from '../SERVICES/Authservice'
+import ProtectedRoutes from '../ProtectedRoutes'
+
+// import { useNavigate } from "react-router-dom";
+
 
 const drawerWidth = 240;
 
@@ -107,29 +114,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MiniDrawer(props) {
+	// const navigate = useNavigate();
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(false);
+	const [logout, setLogout] = useState(false)
 
 	const iconArray = [
-		// <AppRegistrationIcon />,
-		<LoginIcon />,
+		<VpnKeyIcon />,
+		<PersonAddIcon />,
 		<InsertChartIcon />,
 		<PersonIcon />,
 		<ShoppingCartIcon />,
 		<LoyaltyIcon />,
 		<ErrorOutlineIcon />,
-		<LogoutIcon />
+		<ExitToAppIcon />
 
 	];
 	const toArray = [
+		"/",
+		"/register",
 		"/dashboard",
 		"/customer",
 		"/order",
 		"/product",
 		"/about",
-		"/login",
-		"/register"
+		"/logout"
 	];
 
 	const handleDrawerOpen = () => {
@@ -140,9 +150,10 @@ export default function MiniDrawer(props) {
 		setOpen(false);
 	};
 
-	// useEffect(() => {
-	// props.history.push("/dashboard");
-	// }, []);
+	// const logoutHandler = () => {
+	// 	Authservice.logout()
+	// 	alert('Successfully Logged Out')
+	// }
 
 	return (
 		<div className={classes.root}>
@@ -169,6 +180,18 @@ export default function MiniDrawer(props) {
 						<Typography variant="h6" className={classes.title}>
 							CRM
 						</Typography>
+						{/* <IconButton
+							color="inherit"
+							aria-label="Logout"
+							aria-labelledby="logout"
+							onClick={logoutHandler}
+							edge="start"
+						className={clsx(classes.menuButton, {
+							[classes.hide]: open,
+						})}
+						> */}
+							{/* <ExitToAppIcon /> */}
+						{/* </IconButton> */}
 						{/* <Button color="inherit">Logout</Button> */}
 					</Toolbar>
 				</AppBar>
@@ -197,11 +220,14 @@ export default function MiniDrawer(props) {
 					<Divider />
 					<List>
 						{[
+							"Login",
+							"Register",
 							"Dashboard",
 							"Customer",
 							"Order",
 							"Product",
 							"About",
+							"Logout"
 						].map((text, index) => (
 							<ListItem
 								button
@@ -216,30 +242,22 @@ export default function MiniDrawer(props) {
 							</ListItem>
 						))}
 					</List>
-					{/* <Divider /> */}
-					{/* <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
+
 				</Drawer>
 				<main className={classes.content}>
 					<div className={classes.toolbar} />
-					<Typography>{/* <StickyHeadTable/> */}</Typography>
 					<Routes>
-						<Route path="/login" element={<LoginCard />} />
 						<Route path="/register" element={<RegisterCard />} />
-						<Route path="/customer" element={<Customertable />} />
-						<Route path="/dashboard" element={<Dashboard />} />
-						<Route path="/order" element={<Ordertable />} />
-						<Route path="/product" element={<Producttable />} />
-						<Route path="/dashboard" element={<Dashboard />} />
-						<Route path="/about" element={<About />} />
-
-
+						<Route path="/logout" element={<LogoutScreen />} />
+						<Route exact path="/" element={<LoginCard />} />
+						<Route element={<ProtectedRoutes />}>
+							{/* <Route path="/" element={<Dashboard />} /> */}
+							<Route path="/dashboard" element={<Dashboard />} />
+							<Route path="/customer" element={<Customertable />} />
+							<Route path="/order" element={<Ordertable />} />
+							<Route path="/product" element={<Producttable />} />
+							<Route path="/about" element={<About />} />
+						</Route>
 					</Routes>
 				</main>
 			</Router>

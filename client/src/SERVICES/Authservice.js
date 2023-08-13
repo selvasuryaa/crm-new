@@ -1,11 +1,11 @@
 class Authservice {
 	setToken(token) {
 		localStorage.setItem("auth-token", token);
-		console.log("stored Token",token)
+		console.log("stored Token", token)
 	}
 	getToken() {
-		console.log('getting token')
-	 localStorage.getItem("auth-token");
+		return localStorage.getItem("auth-token")
+		// console.log('getting token')
 	}
 	isLoggedIn() {
 		return !!localStorage.getItem("auth-token");

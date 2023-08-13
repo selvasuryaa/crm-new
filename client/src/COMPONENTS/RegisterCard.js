@@ -31,7 +31,7 @@ export default function RegisterCard() {
           setUsername('')
           setPassword('')
           alert('Registration success')
-          navigate('/login')
+          navigate('/')
         }
         if (res.data.status == 2) {
           alert('username Exist')
@@ -49,7 +49,7 @@ export default function RegisterCard() {
   }
 
   const navigateToLogin = () => {
-    return navigate('/login')
+    return navigate('/')
 
   }
 

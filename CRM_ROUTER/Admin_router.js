@@ -20,7 +20,7 @@ router.post("/registerUser", (req, res) => {
                 admin.insertMany(userDetails)
                     .then((out) => {
                         console.log('success response', out)
-                        res.json({ "status": 1, "msg": "registered success","Data":out })
+                        res.json({ "status": 1, "msg": "registered success", "Data": out })
 
                     })
                     .catch((err) => {
@@ -29,33 +29,30 @@ router.post("/registerUser", (req, res) => {
                     })
             }
         })
-
 })
-
-
-
 // login
 router.post("/loginUser", (req, res) => {
     let username = req.body.username
     let password = req.body.password
-    
+
+    const user = { id: username, role: 'admin' }
+
     admin.find({ username: username })
         .then((result) => {
             console.log(result)
 
             if (result.length == 0) {
-                res.json({ "status":0,"message": "username wrong" })
+                res.json({ "status": 0, "message": "username wrong" })
             } else {
                 if (result[0].password == password) {
-                    let token = jwt.sign({ userId: username }, "mysecrets", { expiresIn: '2m' })
-                    console.log(token)
-                    res.json({ "status": 2, "msg": "login success", "result": result, "AccessToken": token })
+
+                    let token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+                    console.log("Token admin router", token)
+                    res.json({ "status": 2, "msg": "login success", "accessToken": token })
                 } else {
-                    res.json({ "status":1, "message": "password wrong" })
+                    res.json({ "status": 1, "message": "password wrong" })
                 }
-
             }
-
         })
         .catch((err) => {
             res.json({ "status": 0, "msg": "login invalid", "error": err })
@@ -87,6 +84,4 @@ router.delete('/deleteAdmin/:id', (req, res) => {
             res.json({ Error: err })
         })
 })
-
-
 module.exports = router

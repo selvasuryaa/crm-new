@@ -35,7 +35,7 @@ router.put("/editproductdata/:id",(req,res)=>{
     let dataToEdit = req.body
     // let id= req.params.id
 
-    product.update({_id:req.params.id},{$set:dataToEdit})
+    product.updateOne({_id:req.params.id},{$set:dataToEdit})
         .then((result)=>{
             res.json({"status":1,"msg":"updated success"})
 

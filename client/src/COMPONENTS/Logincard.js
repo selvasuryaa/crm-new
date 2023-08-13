@@ -3,7 +3,7 @@ import crmImage from '../ASSETS/crm img.jpg'
 import "../CSS/Login.css"
 import { useNavigate } from 'react-router-dom'
 import Adminservice from '../SERVICES/Adminservice';
-// import Authservice from '../SERVICES/Authservice'
+import Authservice from '../SERVICES/Authservice'
 // import MiniDrawer from './Drawer';
 
 
@@ -39,8 +39,9 @@ export default function LoginCard() {
           alert(`${response.data.msg}`)
           setUsername('')
           setPassword('')
-          // localStorage.setItem('islogged', true)
-          // Authservice.setToken(response.data.AccessToken)
+          // localStorage.setItem('key', true)
+          Authservice.setToken(response.data.accessToken)
+          navigate('/dashboard')
         }
 
       })

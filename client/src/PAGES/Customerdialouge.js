@@ -134,10 +134,10 @@ const CustomerDialog = forwardRef((props, ref) => {
 		Customerservice.editCustomer(id, customer)
 			.then((result) => {
 				// console.log(result);
+				// alert(result.data.msg);
 				if (result.data.status == 1) {
 					// getCustomerList()
-					alert(result.data.msg);
-					console.log('message',result.data.msg)
+					// console.log('message',result.data.msg)
 					window.location.reload(false);
 
 				} else {
